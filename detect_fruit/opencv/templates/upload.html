@@ -1,0 +1,47 @@
+<html>
+    <body>
+        <!-- <form id="form" >
+            <input type="file" name="fileToUpload" id="fileToUpload">
+        </form>
+        <input type="button" value="Upload Image" onclick="submit(this)" name="submit"> -->
+
+        <form method="post" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <input type="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+    </body>
+    <script type="text/javascript">
+        const files = [];
+        function _init() {
+            // document.querySelector('#fileToUpload').addEventListener('change', event => {
+            //     handleImageUpload(event)
+            // })
+        }
+
+        function handleImageUpload(event) {
+            files.push(event.target.files);
+        }
+
+        function submit(event) {
+            // const files = event.target.files;
+            const formData = new FormData(document.getElementById('form'))
+            // formData.append('file', files[0])
+            fetch('/opencv/upload', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.cookie.split("csrftoken=")[1],
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        }
+        // _init();
+    </script>
+</html>
