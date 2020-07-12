@@ -5,11 +5,18 @@
         </form>
         <input type="button" value="Upload Image" onclick="submit(this)" name="submit"> -->
 
-        <form method="post" enctype="multipart/form-data" >
+        <form method="post" enctype="multipart/form-data" id="form">
             {% csrf_token %}
             <input type="file" name="file">
             <button type="submit">Upload</button>
         </form>
+        <div id="phnDiv">
+            <label for="phone">Phone Number:</label>
+            <input type="text" name="phone" id="phnNum" />
+            <button onclick="getDetails()">Submit</button>
+        </div>
+        <button id="fetchBtn" onclick="fetchAllUploads()">Fetch All Uploads</button>
+
     </body>
     <script type="text/javascript">
         const files = [];
@@ -17,6 +24,14 @@
             // document.querySelector('#fileToUpload').addEventListener('change', event => {
             //     handleImageUpload(event)
             // })
+            if(!window.localStorage.getItem("phone")){
+                document.getElementById("form").style.display = "none";
+                document.getElementById("fetchBtn").style.display = "none";
+                document.getElementById("phnDiv").style.display = "block";
+            }else{
+                document.getElementById("form").style.display = "block";
+                document.getElementById("phnDiv").style.display = "none";
+            }
         }
 
         function handleImageUpload(event) {
@@ -42,6 +57,47 @@
                 console.error(error)
             })
         }
-        // _init();
+
+        function getDetails(){
+            let phone = document.getElementById("phnNum").value;
+            if(phone){
+                fetch(`/opencv/details/${phone}`, {
+                method: 'GET',
+                headers: {
+                    'X-CSRFToken': document.cookie.split("csrftoken=")[1],
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                window.localStorage.setItem("user_id", data.data.user_id);
+                window.localStorage.setItem("phone", phone);
+                document.getElementById("form").style.display = "block";
+                document.getElementById("fetchBtn").style.display = "block";
+                document.getElementById("phnDiv").style.display = "none";
+            })
+            .catch(error => {
+                console.error(error)
+            })
+            }
+        }
+
+        function fetchAllUploads(){
+            let user_id = window.localStorage.getItem("user_id");
+            if(user_id){
+                fetch(`/opencv/get_uploads/${user_id}`, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error)
+            })
+            }
+        }
+
+        _init();
     </script>
 </html>

@@ -60,5 +60,5 @@ class KafkaConsProd:
         for msg in self.consumer:
             lastOffset = msg.offset
             print ('msg in publisher', msg, lastOffset)
-        
+            self.initDetect.start(settings.MEDIA_ROOT + '/' + msg.value.decode("utf-8"))
         self.consumer.close(autocommit=True)

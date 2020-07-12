@@ -8,7 +8,7 @@ import sys
 
 class DetectColor:
 
-	def find(self, image):
+	def find(self, image, imgName, savePath):
 		resized = imutils.resize(image, width=300)
 		ratio = image.shape[0] / float(resized.shape[0])
 		# blur the resized image slightly, then convert it to both
@@ -37,6 +37,8 @@ class DetectColor:
 			# multiply the contour (x, y)-coordinates by the resize ratio,
 			# then draw the contours and the name of the shape and labeled
 			# color on the image
+			
+			
 			c = c.astype("float")
 			c *= ratio
 			c = c.astype("int")
@@ -44,6 +46,8 @@ class DetectColor:
 			cv2.drawContours(image, [c], -1, (0, 255, 0), 2)
 			cv2.putText(image, text, (cX, cY),
 				cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+			cv2.imwrite(savePath + "/" + imgName, image)
+			return color
 			# show the output image
-			cv2.imshow("Image", image)
-			cv2.waitKey(0)
+			# cv2.imshow("Image", image)
+			# cv2.waitKey(0)
