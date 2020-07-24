@@ -8,7 +8,7 @@ database = 'fruit'
 
 class DataBase:
     # Simple routine to run a query on a database and print the results:
-    def doQuery( self, query ):
+    def findAll( self, query ):
         print("query", query)
         conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database, port=5432 )
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -29,14 +29,11 @@ class DataBase:
         conn.close()
         return result
 
-    # print "Using psycopg2…"
-    # import psycopg2
-    # myConnection = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
-    # doQuery( myConnection )
-    # myConnection.close()
-
-    # print "Using PyGreSQL…"
-    # import pgdb
-    # myConnection = pgdb.connect( host=hostname, user=username, password=password, database=database )
-    # doQuery( myConnection )
-    # myConnection.close()
+    def insert( self, query ):
+        print("query", query)
+        conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database, port=5432 )
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute( query )
+        count = cursor.rowcount
+        conn.close()
+        return count

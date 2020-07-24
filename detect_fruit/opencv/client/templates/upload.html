@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fruit</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/upload.css' %}" />
+  </head>
+  <body>
+    <!-- <form id="form" >
+            <input type="file" name="fileToUpload" id="fileToUpload">
+        </form>
+        <input type="button" value="Upload Image" onclick="submit(this)" name="submit"> -->
+
+    <!-- <form method="post" enctype="multipart/form-data" id="form">
+            {% csrf_token %}
+            <input type="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+        <div id="phnDiv">
+            <label for="phone">Phone Number:</label>
+            <input type="text" name="phone" id="phnNum" />
+            <button onclick="getDetails()">Submit</button>
+        </div>
+        <button id="fetchBtn" onclick="fetchAllUploads()">Fetch All Uploads</button> -->
+
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <!-- <span class="close">&times;</span> -->
+        <label for="phone">Phone Number:</label>
+        <input type="text" name="phone" id="phnNum" />
+        <button onclick="getDetails()">Submit</button>
+      </div>
+    </div>
+    <div id="cntBox">
+      <button class="tablink" onclick="openPage('Home', this, 'red')" id="defaultOpen">
+        New File
+      </button>
+      <button
+        class="tablink"
+        onclick="openPage('News', this, 'green')"
+        
+      >
+        Files
+      </button>
+
+      <div id="Home" class="tabcontent">
+        <div class="card-form">
+            <form id="form" method="post" enctype="multipart/form-data"  class="signup">
+                {% csrf_token %}
+              <div class="form-title">Upload a New File!</div>
+              <div class="form-body">
+                <div class="row">
+                  <input type="file" name="file" placeholder="Upload">
+                </div>
+              </div>
+              <div class="rule"></div>
+              <div class="form-footer">
+                <!-- <button type="submit">Upload Me Up! <span class="fa fa-thumbs-o-up"></span></button> -->
+                <a onclick="submit(this)">Upload Me Up!<span class="fa fa-thumbs-o-up"></span></a>
+              </div>
+            </form>
+          </div>
+      </div>
+
+      <div id="News" class="tabcontent">
+        <div class="table-users">
+          <div class="header">Uploaded Images</div>
+
+          <table id="uploads" cellspacing="0">
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="{% static 'script/upload.js' %}"
+    ></script>
+  </body>
+</html>
