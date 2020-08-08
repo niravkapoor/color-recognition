@@ -1,9 +1,10 @@
-# import json
+import json
 from time import sleep
 from kafka import KafkaConsumer, KafkaProducer
 from kafka.structs import OffsetAndMetadata, TopicPartition
 from .init import InitDetect
 from django.conf import settings
+from .db import DataBase
 
 class KafkaConsProd:
     consumer = None
@@ -11,7 +12,7 @@ class KafkaConsProd:
         print('Running Consumer..')
         self.topic_name = 'image_url'
         self.initDetect = InitDetect()
-        
+        self.db = DataBase()
         self.producer = self.connect_kafka_producer()
 
         # self.consumer.subscribe([self.topic_name])
@@ -59,6 +60,9 @@ class KafkaConsProd:
         lastOffset = None
         for msg in self.consumer:
             lastOffset = msg.offset
-            print ('msg in publisher', msg, lastOffset)
-            self.initDetect.start(settings.MEDIA_ROOT + '/' + msg.value.decode("utf-8"))
+            data = json.loads(msg.value.decode("utf-8"))
+            print ('msg in publisher', data, lastOffset)
+            color = self.initDetect.start(settings.MEDIA_ROOT + '/' + data["url"], data["url"], settings.MEDIA_ROOT)
+            print(color)
+            self.db.update("update uploads set fruit_name = '{color}' where id = {upload_id} RETURNING id".format(upload_id = data["id"], color = color))
         self.consumer.close(autocommit=True)

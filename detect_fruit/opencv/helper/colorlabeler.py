@@ -8,7 +8,7 @@ class ColorLabeler:
 		# name as the key and the RGB tuple as the value
 		colors = OrderedDict({
 			"red": (255, 0, 0),
-			"annar_red": (240, 148, 144),
+			"pomegranate": (240, 148, 144),
 			"green": (0, 255, 0),
 			"light_blue": (0, 141, 221),
 			"yellow": (250,211,71),
@@ -29,17 +29,6 @@ class ColorLabeler:
 		# to L*a*b*
 		self.lab = cv2.cvtColor(self.lab, cv2.COLOR_RGB2LAB)
 	
-	def unique_count_app(self):
-		# a = cv2.imread("anaar.jpeg")
-		colors_temp, count = np.unique(a.reshape(-1,a.shape[-1]), axis=0, return_counts=True)
-		return colors_temp[count.argmax()]
-
-	def bincount_app(self):
-		# a = cv2.imread("anaar.jpeg")
-		a2D = a.reshape(-1,a.shape[-1])
-		col_range = (256, 256, 256) # generically : a2D.max(0)+1
-		a1D = np.ravel_multi_index(a2D.T, col_range)
-		return np.unravel_index(np.bincount(a1D).argmax(), col_range)
 
 	def label(self, image, c, upload):
 		# construct a mask for the contour, then compute the
@@ -48,11 +37,6 @@ class ColorLabeler:
 		cv2.drawContours(mask, [c], -1, 255, -1)
 		mask = cv2.erode(mask, None, iterations=2)
 		mean = cv2.mean(image, mask=mask)[:3]
-		# dominant = self.unique_count_app()
-		# dominant2 = self.bincount_app()
-		# print('dominant', dominant)
-		# print('dominant2',dominant2)
-		# initialize the minimum distance found thus far
 		minDist = (np.inf, None)
 		# loop over the known L*a*b* color values
 		print('mean', mean)

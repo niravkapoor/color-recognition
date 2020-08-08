@@ -1,0 +1,15 @@
+asgiref==3.2.10
+Django==3.1
+django-crontab==0.7.1
+imutils==0.5.3
+joblib==0.16.0
+kafka-python==2.0.1
+numpy==1.19.1
+opencv-contrib-python==3.4.8.29
+psycopg2==2.8.5
+pytz==2020.1
+scikit-learn==0.23.2
+scipy==1.5.2
+sklearn==0.0
+sqlparse==0.3.1
+threadpoolctl==2.1.0

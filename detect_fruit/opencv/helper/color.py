@@ -2,13 +2,11 @@ import cv2
 import numpy as np  
   
 img1 = cv2.imread('blue_sky.jpeg')
-# img1 = img1.astype('uint8')     
-  
+     
 
 # blurred = cv2.GaussianBlur(img1, (5, 5), 0)
 hsv = cv2.cvtColor(img1, cv2.COLOR_BGR2HSV) 
 print(hsv)
-print('>>>>')
 print(img1)
 lower_red = np.array([110,50,50]) 
 upper_red = np.array([202,99,87]) 

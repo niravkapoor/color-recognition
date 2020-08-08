@@ -8,23 +8,6 @@
     <link rel="stylesheet" href="{% static 'css/upload.css' %}" />
   </head>
   <body>
-    <!-- <form id="form" >
-            <input type="file" name="fileToUpload" id="fileToUpload">
-        </form>
-        <input type="button" value="Upload Image" onclick="submit(this)" name="submit"> -->
-
-    <!-- <form method="post" enctype="multipart/form-data" id="form">
-            {% csrf_token %}
-            <input type="file" name="file">
-            <button type="submit">Upload</button>
-        </form>
-        <div id="phnDiv">
-            <label for="phone">Phone Number:</label>
-            <input type="text" name="phone" id="phnNum" />
-            <button onclick="getDetails()">Submit</button>
-        </div>
-        <button id="fetchBtn" onclick="fetchAllUploads()">Fetch All Uploads</button> -->
-
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
@@ -71,7 +54,11 @@
 
           <table id="uploads" cellspacing="0">
             <tbody>
-              
+              <tr>
+                <th>Url</th>
+                <th>Image</th>
+                <th>Fruit Name</th>
+              </tr>
             </tbody>
           </table>
         </div>
