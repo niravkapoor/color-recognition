@@ -40,6 +40,7 @@ Detect Fruit is having following:
   ```bash
   /usr/local/Cellar/kafka/2.5.0/libexec/bin/kafka-server-start.sh /usr/local/etc/kafka/server.properties
   ```
+  * **Kafka** by default runs on **9092** port.
   * Depending on the version of the Kafka installed the path will get change accordingly.
 * **Cron Job** : 
   * Register cron job : python3 [manage.py](manage.py) crontab add , will add the cron job.

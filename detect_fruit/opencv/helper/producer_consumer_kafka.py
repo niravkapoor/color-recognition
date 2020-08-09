@@ -6,6 +6,8 @@ from .init import InitDetect
 from django.conf import settings
 from .db import DataBase
 
+hostNamePort = 'localhost:9092'
+
 class KafkaConsProd:
     consumer = None
     def __init__(self):
@@ -14,23 +16,6 @@ class KafkaConsProd:
         self.initDetect = InitDetect()
         self.db = DataBase()
         self.producer = self.connect_kafka_producer()
-
-        # self.consumer.subscribe([self.topic_name])
-
-        
-        # while True:
-        #     msg = self.consumer.poll(timeout_ms=50000.0)
-        #     if msg is None:
-        #         continue
-        #     else:
-        #         print ('msg in consumer', msg)
-
-        # print ('msg in>>>>>>', msg)
-        # for msg in self.consumer:
-        #     print ('msg in consumer', msg)
-            # self.consumer.commit(offsets=[msg.offset], message=["try"])
-            # self.consumer.close()
-            # self.initDetect.start(settings.MEDIA_ROOT + '/' + msg.value.decode("utf-8"))
 
     def publish_message(self, topic_name, key, value):
         try:
@@ -47,7 +32,7 @@ class KafkaConsProd:
     def connect_kafka_producer(self):
         _producer = None
         try:
-            _producer = KafkaProducer(bootstrap_servers=['localhost:9092'], api_version=(0, 10))
+            _producer = KafkaProducer(bootstrap_servers=[hostNamePort], api_version=(0, 10))
         except Exception as ex:
             print('Exception while connecting Kafka')
             print(str(ex))
@@ -56,7 +41,7 @@ class KafkaConsProd:
     
     def check_consumer(self):
         self.consumer = KafkaConsumer(self.topic_name, auto_offset_reset='earliest',
-                                bootstrap_servers=['localhost:9092'], api_version=(0, 10), consumer_timeout_ms=1000, enable_auto_commit=True, group_id="my-group")
+                                bootstrap_servers=[hostNamePort], api_version=(0, 10), consumer_timeout_ms=1000, enable_auto_commit=True, group_id="my-group")
         lastOffset = None
         for msg in self.consumer:
             lastOffset = msg.offset
